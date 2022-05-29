@@ -1,11 +1,11 @@
-#include <omp.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <chrono>
 
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 
 int main(int argc, char* argv[])
 {
@@ -21,21 +21,13 @@ int main(int argc, char* argv[])
 
     }
 
-
-
-    omp_set_dynamic(0);
-    omp_set_num_threads(8);
-#pragma omp parallel reduction(+:avg)
-    {
-#pragma omp for
-
-        for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
             avg = avg + A[i];
         }
-    }
+
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-    std::cout << "Time :" << time_span.count() << " seconds.\n";
+    std::cout << "Time : " << time_span.count() << " seconds.\n";
     printf(" avg is %d\n\n\n", avg / n);
 
 }
